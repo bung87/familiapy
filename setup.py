@@ -111,11 +111,9 @@ class BuildExt(build_ext):
 setup(
     name='familiapy',
     version='0.0.1',
-    # namespace_packages=['google'],
-    # distclass = MyDist,
-    # packages = ['familiapy'] ,
-    # author='Cliburn Chan',
-    # author_email='cliburn.chan@duke.edu',
-    # description='Example',
+    author='bung',
+    description='Familia python binding using pybind11',
+    license = "MIT",
+    url = "https://github.com/bung87/familiapy", 
     ext_modules=ext_modules,
 )
