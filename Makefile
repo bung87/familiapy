@@ -24,6 +24,6 @@ proto: Familia/proto/config.proto
 	mv Familia/src/config.pb.cc ./Familia/src/config.cpp
 	sed -i ''  's/"config.pb.h"/"familia\/config.pb.h"/g' Familia/src/config.cpp
 install:
-	CC=gcc-6 CXX=g++-6 pip install -U .
+	pip install -U .
 	
 
