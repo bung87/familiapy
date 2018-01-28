@@ -1,0 +1,6 @@
+[submodule "Familia"]
+	path = Familia
+	url = https://github.com/baidu/Familia
+[submodule "pybind11"]
+	path = pybind11
+	url = https://github.com/pybind/pybind11
