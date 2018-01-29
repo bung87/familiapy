@@ -12,7 +12,7 @@ ${PROTOBUF}:
 	$(eval DIR=protobuf-2.5.0)
 	rm -rf $(FILE) $(DIR)
 	$(WGET) $(URL)/$(FILE) && tar -zxf $(FILE)
-	cd $(DIR) && export CFLAGS=-fPIC && export CXXFLAGS=-fPIC && ./configure -prefix=$(DEPS_PATH) && $(MAKE) && $(MAKE) install
+	cd $(DIR) && export CFLAGS=-fPIC && export CXXFLAGS=-fPIC && ./configure  --disable-shared -prefix=$(DEPS_PATH) && $(MAKE) && $(MAKE) install
 	rm -rf $(FILE) $(DIR)
 protobuf: | ${PROTOBUF}
 

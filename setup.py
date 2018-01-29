@@ -4,55 +4,71 @@ import sys
 import setuptools
 import glob
 # from setuptools.dist import Distribution
-
+# LINK_FLAGS = ['-flto', '-Wl,-rpath,.']
 # cpp_args = ['-std=c++11', '-stdlib=libc++', '-mmacosx-version-min=10.7']
 # extra_objects = glob.glob('Familia/third_party/lib/*.a')
+extra_objects = ['Familia/third_party/lib/libprotobuf.a']
+# protobuf_cc = glob.glob('protobuf-2.5.0/src/google/**/*.cc')
+protobuf_cc = []
+familia = protobuf_cc[:]
+
+familia.extend([
+    'Familia/src/inference_engine.cpp', 
+    'Familia/src/sampler.cpp',
+    'Familia/src/config.cpp',
+    'Familia/src/document.cpp',
+    'Familia/src/model.cpp',
+    'Familia/src/semantic_matching.cpp',
+    'Familia/src/tokenizer.cpp',
+    'Familia/src/util.cpp',
+    'Familia/src/vocab.cpp',
+    'Familia/src/vose_alias.cpp',
+    'Familia/python/cpp/familia_wrapper.cpp',
+    # 'familiapy/topictable.cpp'
+    ])
+
+topictable = protobuf_cc[:]
+
+topictable.extend([
+    # 'Familia/src/inference_engine.cpp', 
+    # 'Familia/src/sampler.cpp',
+    # 'Familia/src/config.cpp',
+    # 'Familia/src/document.cpp',
+    # 'Familia/src/model.cpp',
+    'Familia/src/semantic_matching.cpp',
+    # 'Familia/src/tokenizer.cpp',
+    'Familia/src/util.cpp',
+    # 'Familia/src/vocab.cpp',
+    # 'Familia/src/vose_alias.cpp',
+    'familiapy/topictable.cpp'])
 
 ext_modules = [
     Extension(
     'familiapy.familia',
-    ['Familia/src/inference_engine.cpp', 
-    'Familia/src/sampler.cpp',
-    'Familia/src/config.cpp',
-    'Familia/src/document.cpp',
-    'Familia/src/model.cpp',
-    'Familia/src/semantic_matching.cpp',
-    'Familia/src/tokenizer.cpp',
-    'Familia/src/util.cpp',
-    'Familia/src/vocab.cpp',
-    'Familia/src/vose_alias.cpp',
-    'familiapy/familia.cpp'],
+    familia,
     library_dirs=['Familia/third_party/lib'],
     # libraries=['google'],
-    libraries=['gflags', 'glog','protobuf'],
-    # extra_objects=extra_objects,
-    include_dirs=['pybind11/include','Familia/include','Familia/third_party/include'],
+    libraries=['gflags', 'glog'],
+    extra_objects=extra_objects,
+    include_dirs=['Familia/include','Familia/third_party/include'],
+    extra_link_args=['-Bstatic -lprotobuf'],
     language='c++',
     # extra_compile_args = cpp_args,
     ),
-    
     Extension(
-    'familiapy.inference_engine',
-    ['Familia/src/inference_engine.cpp', 
-    'Familia/src/sampler.cpp',
-    'Familia/src/config.cpp',
-    'Familia/src/document.cpp',
-    'Familia/src/model.cpp',
-    'Familia/src/semantic_matching.cpp',
-    'Familia/src/tokenizer.cpp',
-    'Familia/src/util.cpp',
-    'Familia/src/vocab.cpp',
-    'Familia/src/vose_alias.cpp',
-    'familiapy/inference_engine.cpp'],
+    'familiapy.topictable',
+    topictable,
     library_dirs=['Familia/third_party/lib'],
     # libraries=['google'],
-    libraries=['gflags', 'glog','protobuf'],
+    libraries=['gflags', 'glog'],
     # extra_objects=extra_objects,
+    # extra_link_args=LINK_FLAGS,
     include_dirs=['pybind11/include','Familia/include','Familia/third_party/include'],
     language='c++',
     # extra_compile_args = cpp_args,
     ),
 ]
+
 
 
 
@@ -133,6 +149,7 @@ setup(
     name='familiapy',
     version='0.0.1',
     author='bung',
+    packages = ["familiapy/api"],
     description='Familia python binding using pybind11',
     license = "MIT",
     url = "https://github.com/bung87/familiapy", 
