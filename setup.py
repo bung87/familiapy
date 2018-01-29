@@ -9,6 +9,27 @@ import glob
 # extra_objects = glob.glob('Familia/third_party/lib/*.a')
 
 ext_modules = [
+    Extension(
+    'familiapy.familia',
+    ['Familia/src/inference_engine.cpp', 
+    'Familia/src/sampler.cpp',
+    'Familia/src/config.cpp',
+    'Familia/src/document.cpp',
+    'Familia/src/model.cpp',
+    'Familia/src/semantic_matching.cpp',
+    'Familia/src/tokenizer.cpp',
+    'Familia/src/util.cpp',
+    'Familia/src/vocab.cpp',
+    'Familia/src/vose_alias.cpp',
+    'familiapy/familia.cpp'],
+    library_dirs=['Familia/third_party/lib'],
+    # libraries=['google'],
+    libraries=['gflags', 'glog','protobuf'],
+    # extra_objects=extra_objects,
+    include_dirs=['pybind11/include','Familia/include','Familia/third_party/include'],
+    language='c++',
+    # extra_compile_args = cpp_args,
+    ),
     
     Extension(
     'familiapy.inference_engine',
