@@ -95,7 +95,7 @@ void load_item_topic_table(
   class TopicTable
 {
   public:
-    TopicTable(int num_topics,const string &vocabulary_path,const string &item_topic_table_path)       
+    TopicTable(int num_topics,const string &vocabulary_path,const string &item_topic_table_path) :_num_topics(num_topics)      
     {
        
         _topic_sum_table.resize(_num_topics);
