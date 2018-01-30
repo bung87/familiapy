@@ -3,14 +3,10 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 import glob
-# from setuptools.dist import Distribution
-# LINK_FLAGS = ['-flto', '-Wl,-rpath,.']
-# cpp_args = ['-std=c++11', '-stdlib=libc++', '-mmacosx-version-min=10.7']
-# extra_objects = glob.glob('Familia/third_party/lib/*.a')
+
 extra_objects = ['Familia/third_party/lib/libprotobuf.a']
-# protobuf_cc = glob.glob('protobuf-2.5.0/src/google/**/*.cc')
-protobuf_cc = []
-familia = protobuf_cc[:]
+
+familia = []
 
 familia.extend([
     'Familia/src/inference_engine.cpp', 
@@ -24,22 +20,13 @@ familia.extend([
     'Familia/src/vocab.cpp',
     'Familia/src/vose_alias.cpp',
     'Familia/python/cpp/familia_wrapper.cpp',
-    # 'familiapy/topictable.cpp'
     ])
 
-topictable = protobuf_cc[:]
+topictable = []
 
 topictable.extend([
-    # 'Familia/src/inference_engine.cpp', 
-    # 'Familia/src/sampler.cpp',
-    # 'Familia/src/config.cpp',
-    # 'Familia/src/document.cpp',
-    # 'Familia/src/model.cpp',
     'Familia/src/semantic_matching.cpp',
-    # 'Familia/src/tokenizer.cpp',
     'Familia/src/util.cpp',
-    # 'Familia/src/vocab.cpp',
-    # 'Familia/src/vose_alias.cpp',
     'familiapy/topictable.cpp'])
 
 ext_modules = [
@@ -47,31 +34,22 @@ ext_modules = [
     'familiapy.familia',
     familia,
     library_dirs=['Familia/third_party/lib'],
-    # libraries=['google'],
     libraries=['gflags', 'glog'],
     extra_objects=extra_objects,
     include_dirs=['Familia/include','Familia/third_party/include'],
     extra_link_args=['-Bstatic -lprotobuf'],
     language='c++',
-    # extra_compile_args = cpp_args,
     ),
     Extension(
     'familiapy.topictable',
     topictable,
     library_dirs=['Familia/third_party/lib'],
-    # libraries=['google'],
     libraries=['gflags', 'glog'],
-    # extra_objects=extra_objects,
-    # extra_link_args=LINK_FLAGS,
     include_dirs=['pybind11/include','Familia/include','Familia/third_party/include'],
     language='c++',
     # extra_compile_args = cpp_args,
     ),
 ]
-
-
-
-
 
 # class get_pybind_include(object):
 #     """Helper class to determine the pybind11 include path
@@ -140,10 +118,6 @@ class BuildExt(build_ext):
         for ext in self.extensions:
             ext.extra_compile_args = opts
         build_ext.build_extensions(self)
-
-# class MyDist(Distribution):
-#      def has_ext_modules(self):
-#          return True
 
 setup(
     name='familiapy',
