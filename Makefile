@@ -22,7 +22,8 @@ proto: Familia/proto/config.proto
 	$(PROTOC) --cpp_out=./Familia/src --proto_path=./Familia/proto $<
 	mv Familia/src/config.pb.h ./Familia/include/familia
 	mv Familia/src/config.pb.cc ./Familia/src/config.cpp
-	sed -i ''  's/"config.pb.h"/"familia\/config.pb.h"/g' Familia/src/config.cpp
+	sed -i s/"config.pb.h"/"familia\/config.pb.h"/g Familia/src/config.cpp
+	# sed -i '' s/"config.pb.h"/"familia\/config.pb.h"/g Familia/src/config.cpp
 install:
 	pip install -U .
 	
