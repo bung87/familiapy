@@ -1,0 +1,16 @@
+# service configuration for our dockerized Rails app
+version: '2'
+
+services:
+  x86_64:
+    build:
+      context: .
+      dockerfile: docker/x86_64.Dockerfile
+    # command: 
+  i686:
+    build:
+      context: .
+      dockerfile: docker/i686.Dockerfile
+    # command: 
+  
+  
