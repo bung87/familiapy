@@ -3,12 +3,13 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 import glob
+import os 
 
-extra_objects = ['Familia/third_party/lib/libprotobuf.a']
+extra_objects = [ os.path.abspath('Familia/third_party/lib/libprotobuf.a')]
 
 familia = []
 
-familia.extend([
+familia.extend(map(lambda x:os.path.abspath(x),[
     'Familia/src/inference_engine.cpp', 
     'Familia/src/sampler.cpp',
     'Familia/src/config.cpp',
@@ -20,33 +21,35 @@ familia.extend([
     'Familia/src/vocab.cpp',
     'Familia/src/vose_alias.cpp',
     'Familia/python/cpp/familia_wrapper.cpp',
-    ])
+    ]))
 
 topictable = []
 
-topictable.extend([
+topictable.extend(map(lambda x:os.path.abspath(x),[
     'Familia/src/semantic_matching.cpp',
     'Familia/src/util.cpp',
-    'familiapy/topictable.cpp'])
+    'familiapy/topictable.cpp']))
 
 ext_modules = [
     Extension(
     'familiapy.familia',
     familia,
-    library_dirs=['Familia/third_party/lib'],
+    library_dirs=list(map(lambda x:os.path.abspath(x),['Familia/third_party/lib'])),
     libraries=['gflags', 'glog'],
     extra_objects=extra_objects,
-    include_dirs=['Familia/include','Familia/third_party/include'],
+    include_dirs=list(map(lambda x:os.path.abspath(x),['Familia/include','Familia/third_party/include'])),
     extra_link_args=['-Bstatic -lprotobuf'],
     language='c++',
+    # build_temp=os.path.abspath("."),
     ),
     Extension(
     'familiapy.topictable',
     topictable,
-    library_dirs=['Familia/third_party/lib'],
+    library_dirs=list(map(lambda x:os.path.abspath(x),['Familia/third_party/lib'])),
     libraries=['gflags', 'glog'],
-    include_dirs=['pybind11/include','Familia/include','Familia/third_party/include'],
+    include_dirs=list(map(lambda x:os.path.abspath(x),['pybind11/include','Familia/include','Familia/third_party/include'])),
     language='c++',
+    # build_temp=os.path.abspath("."),
     # extra_compile_args = cpp_args,
     ),
 ]
@@ -102,7 +105,7 @@ class BuildExt(build_ext):
     }
 
     if sys.platform == 'darwin':
-        c_opts['unix'] += ['-stdlib=libstdc++','-flat_namespace', '-std=c++11',"-lstdc++",'-mmacosx-version-min=10.7']
+        c_opts['unix'] += ['-stdlib=libstdc++','-flat_namespace',"-lstdc++",'-mmacosx-version-min=10.7']
 
     def build_extensions(self):
         ct = self.compiler.compiler_type
@@ -127,5 +130,8 @@ setup(
     description='Familia python binding using pybind11',
     license = "MIT",
     url = "https://github.com/bung87/familiapy", 
+    cmdclass={
+        'build_ext': BuildExt,
+    },
     ext_modules=ext_modules,
 )
