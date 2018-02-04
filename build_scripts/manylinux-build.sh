@@ -2,7 +2,7 @@
 # build system prrerequisites
 set -e -x
 
-if [[ "$(uname -m)" == i686 ]]; then
+if [[ "$(uname -m)" = i686 ]]; then
 	TOOLCHAIN_URL='https://github.com/Noctem/pogeo-toolchain/releases/download/v1.5/gcc-7.3-centos5-i686.tar.bz2'
 	export LD_LIBRARY_PATH="/toolchain/lib:${LD_LIBRARY_PATH}"
 	MFLAG="-m32"

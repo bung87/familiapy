@@ -3,11 +3,13 @@ version: '2'
 
 services:
   x86_64:
+    image: gcc_x86_64
     build:
       context: .
       dockerfile: docker/x86_64.Dockerfile
     # command: 
   i686:
+    image: gcc_i686
     build:
       context: .
       dockerfile: docker/i686.Dockerfile

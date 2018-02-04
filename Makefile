@@ -1,6 +1,6 @@
 
 ifndef DEPS_PATH
-DEPS_PATH = $(shell pwd)/Familia/third_party
+DEPS_PATH = $(shell pwd)/third_party
 endif
 
 ifndef PROTOC
