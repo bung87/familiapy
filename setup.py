@@ -5,7 +5,7 @@ import setuptools
 import glob
 import os 
 
-extra_objects = [ os.path.abspath('Familia/third_party/lib/libprotobuf.a')]
+extra_objects = [ os.path.abspath('third_party/lib/libprotobuf.a')]
 
 familia = []
 
@@ -34,10 +34,10 @@ ext_modules = [
     Extension(
     'familiapy.familia',
     familia,
-    library_dirs=list(map(lambda x:os.path.abspath(x),['Familia/third_party/lib'])),
+    library_dirs=list(map(lambda x:os.path.abspath(x),['third_party/lib'])),
     libraries=['gflags', 'glog'],
     extra_objects=extra_objects,
-    include_dirs=list(map(lambda x:os.path.abspath(x),['Familia/include','Familia/third_party/include'])),
+    include_dirs=list(map(lambda x:os.path.abspath(x),['Familia/include','third_party/include'])),
     extra_link_args=['-Bstatic -lprotobuf'],
     language='c++',
     # build_temp=os.path.abspath("."),
@@ -45,9 +45,9 @@ ext_modules = [
     Extension(
     'familiapy.topictable',
     topictable,
-    library_dirs=list(map(lambda x:os.path.abspath(x),['Familia/third_party/lib'])),
+    library_dirs=list(map(lambda x:os.path.abspath(x),['third_party/lib'])),
     libraries=['gflags', 'glog'],
-    include_dirs=list(map(lambda x:os.path.abspath(x),['pybind11/include','Familia/include','Familia/third_party/include'])),
+    include_dirs=list(map(lambda x:os.path.abspath(x),['pybind11/include','Familia/include','third_party/include'])),
     language='c++',
     # build_temp=os.path.abspath("."),
     # extra_compile_args = cpp_args,
