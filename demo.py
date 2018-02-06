@@ -37,7 +37,22 @@ if __name__ == '__main__':
         # 打印结果
         print("Document Topic Distribution:")
         print(topic_dist)
+        topic_words = []
         for t in topic_dist:
             print(topic.topic_words(t[0],10) )
+            topic_words.append( list( map(lambda x:x[0],topic.topic_words(t[0],10)) ))
             # result_list = twe_wrapper.nearest_words_around_topic(t[0], 10)
             # print_result(result_list)
+        topicids = map(lambda x:x[0],topic_dist)
+        m = zip(topicids,topic_words)
+        d = dict(m)
+        print(d)
+        r = {}
+        for k ,v in d.items():
+            print(v)
+            for w in v :
+                count = input_text.count(w)
+                r.update({k: r.get(k,0) + count})
+        print(r)
+        maximum = max(c, key=c.get) 
+        print(maximum)
